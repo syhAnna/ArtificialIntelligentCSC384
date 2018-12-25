@@ -1,0 +1,61 @@
+# helper function
+CNNTraining(dataSet):
+	for i in range(size(dataSet)):
+		matches = CNN(dataSet.image[i])
+		while matches != dataSet.matches:
+			backPropagation()
+
+init robot class
+init game class
+
+robot.ballFeatures = CNNTraining(dataSetOfTennisBall)
+robot.playersFeatures = CNNTraining(dataSetOfPlayers)
+robot.courtBoundary = cannyEdgeDetection(currCourtImage)
+
+# consider the default methods: faceDirection(X,Y,Z), moveToLocation(X,Y,Z), 
+# grabObject(X,Y,Z), victoryDanceAtLocation(X,Y,Z)
+# as the methods robot class
+
+TennisGame(robot, game):
+	"""
+	Pass in the initialized robot and game objects.
+	Play the tennis match.
+	"""
+	while !game.gameOver:
+		robot.takeStereoImage()
+		balls, players, obstacles = robot.recognizeBallsLocation(),
+									robot.recognizePlayersLocation(),
+									robot.recognizeObsatclesLocation()
+		numRemainingBalls = len(balls)
+
+		if game.pointFinished && numRemainingBalls != 0:
+			robot.getCurrentGameStatistic()
+			# get the position of the player who serve the ball in the next point
+			playerServeBall = robot.getPlayerServeBall()
+			# determine whether the current robot is closest to playerServeBall
+			# among all other robots
+			if robot.closestToPlayer(playerServeBall, robot.otherRobots)
+				robot.faceDirection(playerServeBall)
+				robot.moveToLocation(playerServeBall)
+				# use the facial detection to check
+				if robot.arrive(playerServeBall) && robot.checkCorrectPlayer():
+					if robot.deliverBall(playerServeBall):
+						# defaultLocation is somewhere outside of the court
+						# the start position and dance position of the robot
+						# here robot not grab the ball, therefore, not dance
+						robot.faceDirection(robot.defaultLocation)
+						robot.moveToLocation(robot.defaultLocation)
+
+			else:
+				# the robot grab one ball from the balls on the ground and dance
+				ball = robot.ballToGrab(balls)
+				robot.faceDirection(ball)
+				robot.moveToLocation(ball)
+				if robot.arrive(ball):
+					numRemainingBalls--
+					if robot.grabObject(ball):
+						robot.faceDirection(robot.defaultLocation)
+						robot.moveToLocation(robot.defaultLocation)
+						robot.victoryDanceAtLocation(robot.defaultLocation)
+
+
