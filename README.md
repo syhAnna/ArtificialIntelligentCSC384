@@ -1,2 +1,2 @@
-# ArtificialIntelligentCSC384
-Artificial Intelligent
+# Computer Vision CSC420
+Computer Vision
